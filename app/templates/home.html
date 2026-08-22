@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}Sabores da Serra - Fazenda Familiar e Produtos Artesanais{% endblock %}
+
+{% block content %}
+<!-- Carrossel de Imagens Dinâmico -->
+<section class="hero-carousel">
+    <div class="carousel-wrapper">
+        {% if photos %}
+            {% for photo in photos %}
+                <div class="carousel-slide {% if loop.first %}active{% endif %}" data-slide-index="{{ loop.index0 }}">
+                    <img src="{{ url_for('serve_media', filename=photo) }}" alt="Paisagem e produção da Fazenda Sabores da Serra">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <span class="slide-tagline">Tradição & Pureza</span>
+                            <h1 class="slide-title">Sabores da Serra</h1>
+                            <p class="slide-text">Queijos curados, geleias naturais, pães artesanais e o sabor autêntico da vida no campo.</p>
+                            <div class="slide-buttons">
+                                <a href="{{ url_for('main.producao') }}" class="btn btn-primary">Nossa Produção</a>
+                                <a href="{{ url_for('main.contato') }}" class="btn btn-secondary">Visite a Fazenda</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Slide de Fallback se a pasta /media/fotos estiver vazia -->
+            <div class="carousel-slide active" data-slide-index="0">
+                <div class="slide-fallback-bg"></div>
+                <div class="slide-overlay">
+                    <div class="slide-content">
+                        <span class="slide-tagline">Bem-vindo</span>
+                        <h1 class="slide-title">Sabores da Serra</h1>
+                        <p class="slide-text">Fazenda familiar de produtos artesanais. Adicione belas fotos do seu dia a dia na pasta <code>/media/fotos</code> para personalizar o seu carrossel!</p>
+                        <div class="slide-buttons">
+                            <a href="{{ url_for('main.producao') }}" class="btn btn-primary">Nossos Sabores</a>
+                            <a href="{{ url_for('main.contato') }}" class="btn btn-secondary">Fale Conosco</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if photos|length > 1 %}
+            <!-- Controles de Navegação -->
+            <button class="carousel-arrow arrow-left" id="prevBtn" aria-label="Imagem anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow arrow-right" id="nextBtn" aria-label="Próxima imagem">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            
+            <!-- Indicadores (Dots) -->
+            <div class="carousel-indicators" id="carouselIndicators">
+                {% for photo in photos %}
+                    <span class="indicator-dot {% if loop.first %}active{% endif %}" data-slide-to="{{ loop.index0 }}"></span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Apresentação Rústica -->
+<section class="section intro-section">
+    <div class="container grid-2">
+        <div class="intro-text-content">
+            <span class="section-subtitle">Sobre a nossa Fazenda</span>
+            <h2 class="section-title">Onde o Tempo Corre no Ritmo da Natureza</h2>
+            <p class="lead-text">
+                Localizada no topo da região serrana, a Fazenda Sabores da Serra nasceu do sonho de retornar às origens e viver em harmonia com as estações do ano.
+            </p>
+            <p>
+                Trabalhamos de forma totalmente artesanal e sustentável. Nosso rebanho de vacas leiteiras é alimentado com pastagens nativas livres de defensivos químicos, e todas as nossas geleias e pães são preparados lentamente, respeitando o tempo de maturação e fermentação de cada receita familiar.
+            </p>
+            <a href="{{ url_for('main.historia') }}" class="btn btn-outline">Conheça Nossa História <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="intro-visual">
+            <div class="image-wrapper rústico">
+                {% if photos %}
+                    <img src="{{ url_for('serve_media', filename=photos[0]) }}" alt="Ambiente rústico da fazenda Sabores da Serra" class="rounded-img shadow-lg">
+                {% else %}
+                    <div class="placeholder-box">
+                        <i class="fa-solid fa-tractor"></i>
+                        <span>Insira uma foto em /media/fotos</span>
+                    </div>
+                {% endif %}
+                <div class="badge-experience">
+                    <span class="badge-number">28</span>
+                    <span class="badge-label">Anos de<br>Tradição</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Destaques dos Produtos -->
+<section class="section highlights-section">
+    <div class="container text-center">
+        <span class="section-subtitle font-alt">Feito à Mão</span>
+        <h2 class="section-title">Nossos Destaques Especiais</h2>
+        <p class="section-intro">
+            Algumas das delícias que preparamos com dedicação na fazenda e que encantam os visitantes da nossa região.
+        </p>
+        
+        <div class="grid-3 card-grid">
+            {% for dest in destaques %}
+                <div class="highlight-card">
+                    <div class="card-icon-wrapper">
+                        {% if loop.index == 1 %}
+                            <i class="fa-solid fa-cheese"></i>
+                        {% elif loop.index == 2 %}
+                            <i class="fa-solid fa-jar"></i>
+                        {% else %}
+                            <i class="fa-solid fa-bread-slice"></i>
+                        {% endif %}
+                    </div>
+                    <span class="card-category">{{ dest.categoria }}</span>
+                    <h3 class="card-title">{{ dest.nome }}</h3>
+                    <p class="card-text">{{ dest.descricao }}</p>
+                    <a href="{{ dest.link }}" class="card-link">Saber mais <i class="fa-solid fa-circle-chevron-right"></i></a>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="cta-producao-button">
+            <a href="{{ url_for('main.producao') }}" class="btn btn-primary">Ver Linha Completa de Produtos</a>
+        </div>
+    </div>
+</section>
+
+<!-- Chamada para Ação Rápida (CTA) -->
+<section class="section cta-split">
+    <div class="cta-split-container">
+        <!-- Lado 1: História -->
+        <div class="cta-card cta-left">
+            <div class="cta-bg-overlay"></div>
+            <div class="cta-content">
+                <h2>Nossa Herança Familiar</h2>
+                <p>Nascido de um pequeno tacho de geleia de morango e queijo fresco, nosso projeto familiar atravessa gerações mantendo as mesmas receitas.</p>
+                <a href="{{ url_for('main.historia') }}" class="btn btn-secondary">Conheça Nossa História</a>
+            </div>
+        </div>
+        
+        <!-- Lado 2: Contato/Visita -->
+        <div class="cta-card cta-right">
+            <div class="cta-bg-overlay"></div>
+            <div class="cta-content">
+                <h2>Quer Experimentar?</h2>
+                <p>Venha nos visitar no Vale das Araucárias ou entre em contato para fazer encomendas de queijos e pães frescos da semana.</p>
+                <a href="{{ url_for('main.contato') }}" class="btn btn-primary">Entre em Contato</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

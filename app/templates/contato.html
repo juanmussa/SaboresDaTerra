@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Contate-nos - Sabores da Serra{% endblock %}
+
+{% block content %}
+<!-- Banner de Título -->
+<section class="page-banner contact-banner">
+    <div class="banner-overlay">
+        <div class="banner-content container text-center">
+            <span class="banner-subtitle">Conecte-se com a Gente</span>
+            <h1 class="banner-title">Contate-nos</h1>
+            <p class="banner-text">Faça uma encomenda, tire dúvidas ou agende uma visita guiada à nossa fazenda.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Conteúdo de Contato -->
+<section class="section contact-section">
+    <div class="container grid-2">
+        <!-- Detalhes e Contatos Físicos -->
+        <div class="contact-info-panel">
+            <span class="section-subtitle">Onde Nos Encontrar</span>
+            <h2 class="section-title">Informações de Contato</h2>
+            <p class="panel-intro-text">
+                Ficamos localizados no coração da serra, em meio a araucárias e ar fresco. O acesso é pavimentado até a entrada da fazenda.
+            </p>
+            
+            <div class="contact-details-list">
+                <div class="contact-detail-item">
+                    <div class="item-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="item-text">
+                        <h3>Endereço</h3>
+                        <p>Estrada da Cascata, Km 12, Vale das Araucárias - Região Serrana, CEP 28600-000</p>
+                    </div>
+                </div>
+                
+                <div class="contact-detail-item">
+                    <div class="item-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="item-text">
+                        <h3>Telefone & WhatsApp</h3>
+                        <p>(24) 99888-7766</p>
+                    </div>
+                </div>
+                
+                <div class="contact-detail-item">
+                    <div class="item-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="item-text">
+                        <h3>E-mail Geral</h3>
+                        <p>contato@saboresdaserra.com.br</p>
+                    </div>
+                </div>
+                
+                <div class="contact-detail-item">
+                    <div class="item-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="item-text">
+                        <h3>Horário de Atendimento</h3>
+                        <p>Segunda a Sexta: 08:00 às 17:00<br>Sábados e Feriados: 09:00 às 13:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dica Importante sobre Visitas -->
+            <div class="visit-alert-box">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p>
+                    <strong>Atenção:</strong> Visitas à fazenda e compras no local funcionam apenas mediante agendamento prévio para garantir a melhor recepção a você.
+                </p>
+            </div>
+        </div>
+
+        <!-- Formulário de Mensagem -->
+        <div class="contact-form-panel">
+            <span class="section-subtitle">Mande uma Mensagem</span>
+            <h2 class="section-title">Escreva para Nós</h2>
+            <p class="panel-intro-text">Preencha o formulário abaixo e responderemos em até 24 horas úteis.</p>
+
+            <form action="{{ url_for('main.contato') }}" method="POST" class="rustic-form" id="contactForm">
+                <!-- Nome -->
+                <div class="form-group">
+                    <label for="nome">Nome Completo <span class="required">*</span></label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required minlength="3">
+                    <span class="validation-message" id="nomeError">O nome deve ter pelo menos 3 caracteres.</span>
+                </div>
+
+                <!-- E-mail e Telefone em Grid -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">E-mail <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
+                        <span class="validation-message" id="emailError">Insira um endereço de e-mail válido.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone / Celular</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(24) 99999-9999">
+                        <span class="validation-message" id="telError">Insira um telefone válido com DDD.</span>
+                    </div>
+                </div>
+
+                <!-- Assunto -->
+                <div class="form-group">
+                    <label for="assunto">Assunto <span class="required">*</span></label>
+                    <select id="assunto" name="assunto" required>
+                        <option value="" disabled selected>Selecione o motivo do contato</option>
+                        <option value="Dúvidas Gerais">Dúvidas Gerais</option>
+                        <option value="Encomendas de Produtos">Encomendas de Produtos</option>
+                        <option value="Agendamento de Visita">Agendamento de Visita</option>
+                        <option value="Sugestões e Elogios">Sugestões e Elogios</option>
+                    </select>
+                    <span class="validation-message" id="assuntoError">Por favor, selecione um assunto.</span>
+                </div>
+
+                <!-- Mensagem -->
+                <div class="form-group">
+                    <label for="mensagem">Mensagem <span class="required">*</span></label>
+                    <textarea id="mensagem" name="mensagem" rows="6" placeholder="Escreva sua mensagem aqui..." required></textarea>
+                    <span class="validation-message" id="mensagemError">A mensagem não pode ficar em branco.</span>
+                </div>
+
+                <!-- Botão de Envio -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+                        Enviar Mensagem <i class="fa-regular fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Mapa Estilizado Fictício -->
+<section class="section map-section">
+    <div class="container text-center">
+        <h2 class="section-title">Como Chegar</h2>
+        <div class="rustic-map-placeholder">
+            <div class="map-overlay">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3>Navegue Pelo Vale</h3>
+                <p>Estrada da Cascata, s/n - Vale das Araucárias. Siga as placas de madeira indicativas "Fazenda Sabores da Serra" a partir da rodovia principal.</p>
+                <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-outline-light"><i class="fa-solid fa-compass"></i> Abrir no Google Maps</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

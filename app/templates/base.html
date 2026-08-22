@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sabores da Serra - Produtos artesanais de alta qualidade direto da nossa fazenda familiar nas montanhas.">
+    <title>{% block title %}Sabores da Serra - Fazenda Artesanal{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome para ícones rústicos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilo Principal -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Cabeçalho Principal -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="{{ url_for('main.home') }}" class="logo-link">
+                <div class="logo-content">
+                    <i class="fa-solid fa-mountain-sun logo-icon"></i>
+                    <span class="logo-text">Sabores da Serra</span>
+                </div>
+            </a>
+            
+            <!-- Botão do Menu Mobile (Hambúrguer) -->
+            <button class="mobile-menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <!-- Links de Navegação -->
+            <nav class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li>
+                        <a href="{{ url_for('main.home') }}" class="nav-link {% if request.path == '/' or request.path == '/home' %}active{% endif %}">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.producao') }}" class="nav-link {% if request.path == '/producao' %}active{% endif %}">
+                            Nossa Produção
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.tabela') }}" class="nav-link {% if request.path == '/tabela' %}active{% endif %}">
+                            Produtos e Sabores
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.historia') }}" class="nav-link {% if request.path == '/historia' %}active{% endif %}">
+                            Nossa História
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('main.contato') }}" class="nav-link {% if request.path == '/contato' %}active{% endif %}">
+                            Contate-nos
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Exibição de Mensagens Flash (Alertas do Flask) -->
+    <div class="flash-messages-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }} fade-in">
+                        <span class="message-text">{{ message }}</span>
+                        <button class="close-flash-btn" onclick="this.parentElement.remove();">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Conteúdo Principal Dinâmico -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Rodapé Padronizado -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section brand-info">
+                <div class="footer-logo">
+                    <i class="fa-solid fa-mountain-sun"></i>
+                    <span>Sabores da Serra</span>
+                </div>
+                <p class="footer-description">
+                    Uma tradição de família que leva os sabores puros e rústicos da montanha direto para a sua mesa. Pães artesanais, queijos maturados, doces e conservas naturais.
+                </p>
+            </div>
+            
+            <div class="footer-section footer-links">
+                <h3>Navegação</h3>
+                <ul>
+                    <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                    <li><a href="{{ url_for('main.producao') }}">Nossa Produção</a></li>
+                    <li><a href="{{ url_for('main.tabela') }}">Tabela de Produtos</a></li>
+                    <li><a href="{{ url_for('main.historia') }}">Nossa História</a></li>
+                    <li><a href="{{ url_for('main.contato') }}">Contate-nos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section footer-contact">
+                <h3>Contatos da Fazenda</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Estrada da Cascata, Km 12, Vale das Araucárias - Região Serrana</p>
+                <p><i class="fa-solid fa-phone"></i> (24) 99888-7766</p>
+                <p><i class="fa-solid fa-envelope"></i> contato@saboresdaserra.com.br</p>
+                <p><i class="fa-solid fa-clock"></i> Visitas sob agendamento prévio</p>
+            </div>
+
+            <div class="footer-section footer-social">
+                <h3>Siga Nossa Rotina</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Acompanhe no Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Siga no Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" aria-label="Veja no YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Fazenda Sabores da Serra. Todos os direitos reservados. Feito com amor e tradição.</p>
+        </div>
+    </footer>
+
+    <!-- Script Principal -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#f2ede2"/>
+  <circle cx="400" cy="225" r="120" fill="#e7decb"/>
+  <path d="M400 120 L480 270 L320 270 Z" fill="#7c9d82" opacity="0.6"/>
+  <path d="M440 160 L510 290 L370 290 Z" fill="#4c6850" opacity="0.8"/>
+  <path d="M350 180 L410 295 L290 295 Z" fill="#1b3d22" opacity="0.7"/>
+  <rect x="388" y="270" width="24" height="40" fill="#4a2f1b"/>
+  <text x="50%" y="370" font-family="'Playfair Display', Georgia, serif" font-size="28" font-weight="bold" fill="#1b3d22" text-anchor="middle">Sabores da Serra</text>
+  <text x="50%" y="400" font-family="'Inter', sans-serif" font-size="16" fill="#704f37" text-anchor="middle">Fazenda Familiar - Imagem Artesanal</text>
+</svg>

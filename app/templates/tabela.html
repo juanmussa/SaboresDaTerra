@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Produtos e Sabores - Tabela de Preços e Disponibilidade{% endblock %}
+
+{% block content %}
+<!-- Banner de Título -->
+<section class="page-banner table-banner">
+    <div class="banner-overlay">
+        <div class="banner-content container text-center">
+            <span class="banner-subtitle">Nossa Colheita e Maturação</span>
+            <h1 class="banner-title">Produtos e Sabores</h1>
+            <p class="banner-text">Confira nossa tabela completa de preços, pesos e disponibilidade atual da fazenda.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Introdução à Tabela -->
+<section class="section table-intro">
+    <div class="container text-center narrow-container">
+        <h2 class="section-title">Preços da Estação</h2>
+        <p class="lead-text">
+            Como produzimos de forma artesanal e respeitando as safras naturais da nossa encosta, alguns produtos podem estar temporariamente indisponíveis. A tabela abaixo é atualizada semanalmente.
+        </p>
+    </div>
+</section>
+
+<!-- Tabela de Produtos -->
+<section class="section table-section">
+    <div class="container">
+        <!-- Wrapper Responsivo -->
+        <div class="table-responsive-wrapper shadow-lg">
+            <table class="rustic-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Peso / Quantidade</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prod in produtos %}
+                        <tr>
+                            <td data-label="Produto" class="product-td">
+                                <strong>{{ prod.nome }}</strong>
+                            </td>
+                            <td data-label="Categoria" class="category-td">
+                                <span class="table-category-badge">{{ prod.categoria }}</span>
+                            </td>
+                            <td data-label="Descrição" class="desc-td">
+                                {{ prod.descricao }}
+                            </td>
+                            <td data-label="Peso / Qtd" class="weight-td">
+                                {{ prod.peso }}
+                            </td>
+                            <td data-label="Preço" class="price-td">
+                                {{ prod.preco }}
+                            </td>
+                            <td data-label="Status" class="status-td">
+                                {% if prod.disponivel %}
+                                    <span class="status-badge disponivel">
+                                        <i class="fa-solid fa-circle-check"></i> Em estoque
+                                    </span>
+                                {% else %}
+                                    <span class="status-badge esgotado">
+                                        <i class="fa-solid fa-clock"></i> Esgotado
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Instruções de Compra -->
+        <div class="table-actions-container text-center">
+            <p class="table-notes">
+                * Preços especiais válidos para retirada direta na Fazenda ou entregas regionais.
+            </p>
+            <div class="table-cta-buttons">
+                <a href="{{ url_for('main.contato') }}" class="btn btn-primary">Fazer Encomenda / Solicitar Visita</a>
+                <a href="{{ url_for('main.producao') }}" class="btn btn-outline">Ver Detalhes dos Produtos</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

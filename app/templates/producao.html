@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Nossa Produção Artesanal - Sabores da Serra{% endblock %}
+
+{% block content %}
+<!-- Banner de Título -->
+<section class="page-banner production-banner">
+    <div class="banner-overlay">
+        <div class="banner-content container text-center">
+            <span class="banner-subtitle">Feito com Amor e Respeito</span>
+            <h1 class="banner-title">Nossa Produção</h1>
+            <p class="banner-text">Conheça os alimentos puros e artesanais que produzimos em pequenos lotes no Vale das Araucárias.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Apresentação Geral -->
+<section class="section production-intro">
+    <div class="container text-center narrow-container">
+        <h2 class="section-title">O Segredo do Sabor Rústico</h2>
+        <p class="lead-text">
+            Nossos ingredientes são cultivados na própria fazenda ou adquiridos de pequenos produtores parceiros da nossa região. Sem conservantes químicos, sem aceleradores artificiais: apenas o tempo, o clima de montanha e o saber tradicional de nossa família.
+        </p>
+    </div>
+</section>
+
+<!-- Grid de Produtos -->
+<section class="section products-section">
+    <div class="container">
+        <div class="products-list-wrapper">
+            {% for prod in produtos %}
+                <div class="product-item-row" id="{{ prod.id }}">
+                    <!-- Visual do Produto (Imagem ou Placeholder) -->
+                    <div class="product-visual">
+                        <div class="product-image-container">
+                            <img src="{{ url_for('serve_media', filename=prod.imagem) }}" 
+                                 alt="{{ prod.nome }}" 
+                                 class="product-image shadow"
+                                 onerror="this.onerror=null; this.src='{{ url_for('static', filename='img/placeholder.svg') }}';">
+                            <span class="product-badge">{{ prod.categoria }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Informações do Produto -->
+                    <div class="product-details-content">
+                        <h3 class="product-name">{{ prod.nome }}</h3>
+                        <p class="product-description">{{ prod.descricao }}</p>
+                        
+                        <div class="product-meta-specs">
+                            <span class="spec-label">Características:</span>
+                            <span class="spec-value">{{ prod.detalhes }}</span>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <span class="production-frequency"><i class="fa-solid fa-seedling"></i> Produção Limitada e Sazonal</span>
+                            <a href="{{ url_for('main.contato') }}" class="btn btn-outline-dark">Fazer Encomenda</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Seção Informativa de Qualidade -->
+<section class="section quality-banners-section">
+    <div class="container grid-3">
+        <div class="quality-feature text-center">
+            <div class="feature-icon"><i class="fa-solid fa-cow"></i></div>
+            <h3>Bem-estar Animal</h3>
+            <p>Nossas vacas leiteiras são livres para pastar nas encostas verdejantes da serra, recebendo cuidados humanizados.</p>
+        </div>
+        <div class="quality-feature text-center">
+            <div class="feature-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <h3>Lentidão Natural</h3>
+            <p>Respeitamos a fermentação prolongada dos pães e a maturação perfeita dos queijos para intensificar sabor e digestibilidade.</p>
+        </div>
+        <div class="quality-feature text-center">
+            <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+            <h3>Sem Aditivos</h3>
+            <p>Livre de corantes, conservantes ou aromatizantes artificiais. O verdadeiro sabor da serra, puro e autêntico.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

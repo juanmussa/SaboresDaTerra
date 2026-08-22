@@ -1,0 +1,49 @@
+# ====================
+# Python / Flask
+# ====================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# Ambientes virtuais
+venv/
+ENV/
+env/
+
+# Variáveis de ambiente (segredos)
+.env
+.env.local
+.env.*.local
+
+# ====================
+# Testes
+# ====================
+.pytest_cache/
+.coverage
+htmlcov/
+pytest.ini
+tests/
+
+# ====================
+# Mídias locais
+# (imagens ficam em storage externo em produção)
+# ====================
+media/
+
+# ====================
+# IDEs e Ferramentas
+# ====================
+.agents/
+.gemini/
+.vscode/
+.idea/
+*.lnk
+
+# ====================
+# Sistema Operacional
+# ====================
+Thumbs.db
+.DS_Store
+desktop.ini

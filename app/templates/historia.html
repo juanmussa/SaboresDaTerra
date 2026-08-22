@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Nossa História - Sabores da Serra{% endblock %}
+
+{% block content %}
+<!-- Banner de Título -->
+<section class="page-banner history-banner">
+    <div class="banner-overlay">
+        <div class="banner-content container text-center">
+            <span class="banner-subtitle">Desde 1998 nas Montanhas</span>
+            <h1 class="banner-title">Nossa História</h1>
+            <p class="banner-text">Conheça a trajetória, os sonhos e os valores que cultivamos no topo da serra.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Texto Histórico Narrativo -->
+<section class="section history-narrative">
+    <div class="container grid-2">
+        <div class="narrative-text">
+            <span class="section-subtitle">Como Tudo Começou</span>
+            <h2 class="section-title">O Resgate das Nossas Raízes</h2>
+            <p class="lead-text">
+                No final da década de 1990, a família Silva decidiu deixar a agitação da cidade grande em busca de um estilo de vida mais conectado com a terra e o silêncio.
+            </p>
+            <p>
+                Ao chegarem à encosta fria e fértil da serra fluminense, no Vale das Araucárias, começaram com apenas duas vacas leiteiras e um pomar silvestre. O que inicialmente era apenas para consumo próprio logo chamou a atenção dos vizinhos e viajantes que passavam pela estrada. O queijo fresco rústico e a geleia artesanal de morango traziam a doçura e a pureza que só as águas puras e a altitude local podiam proporcionar.
+            </p>
+            <p>
+                Ao longo dos anos, com dedicação diária e respeito inabalável aos ciclos da natureza, nossa pequena produção cresceu sem perder o caráter familiar e o amor por fazer alimentos de verdade.
+            </p>
+        </div>
+        <div class="narrative-visual">
+            <div class="image-wrapper shadow-lg">
+                {% if photos|length > 0 %}
+                    <img src="{{ url_for('serve_media', filename=photos[0]) }}" alt="A fazenda no início" class="rounded-img">
+                {% else %}
+                    <div class="placeholder-box">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                        <span>Insira uma imagem em /media/fotos</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Linha do Tempo -->
+<section class="section timeline-section">
+    <div class="container">
+        <h2 class="section-title text-center">Nossa Linha do Tempo</h2>
+        <p class="section-intro text-center">Os principais momentos e marcos que moldaram o nosso amor pelo campo.</p>
+        
+        <div class="timeline-container">
+            {% for item in linha_tempo %}
+                <div class="timeline-item {% if loop.index % 2 == 0 %}right{% else %}left{% endif %}">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">{{ item.ano }}</div>
+                    <div class="timeline-content shadow">
+                        <h3>{{ item.titulo }}</h3>
+                        <p>{{ item.descricao }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Missão, Visão e Valores -->
+<section class="section mvv-section">
+    <div class="container">
+        <div class="grid-3 card-grid">
+            <div class="mvv-card">
+                <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
+                <h3>Missão</h3>
+                <p>Produzir alimentos artesanais puros e saudáveis, preservando os métodos tradicionais de fabricação e respeitando o meio ambiente.</p>
+            </div>
+            
+            <div class="mvv-card">
+                <div class="card-icon"><i class="fa-solid fa-eye"></i></div>
+                <h3>Visão</h3>
+                <p>Ser referência em gastronomia artesanal e turismo rural sustentável, inspirando as pessoas a valorizarem o produtor local e as origens rurais.</p>
+            </div>
+            
+            <div class="mvv-card">
+                <div class="card-icon"><i class="fa-solid fa-heart"></i></div>
+                <h3>Valores</h3>
+                <p>Tradição familiar, sustentabilidade, respeito aos animais, transparência com os consumidores e amor pela terra em que vivemos.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Galeria Dinâmica de Imagens -->
+<section class="section gallery-section">
+    <div class="container">
+        <h2 class="section-title text-center">Vislumbres da Fazenda</h2>
+        <p class="section-intro text-center">Fotos reais capturadas na fazenda Sabores da Serra. Todas as fotos abaixo são carregadas de forma totalmente dinâmica da nossa pasta de imagens.</p>
+        
+        {% if photos %}
+            <div class="gallery-grid">
+                {% for photo in photos %}
+                    <div class="gallery-card shadow">
+                        <img src="{{ url_for('serve_media', filename=photo) }}" alt="Paisagem de Sabores da Serra">
+                        <div class="gallery-hover-overlay">
+                            <span><i class="fa-solid fa-magnifying-glass-plus"></i> Sabores da Serra</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Fallback caso não existam fotos na pasta -->
+            <div class="gallery-fallback text-center">
+                <i class="fa-solid fa-images"></i>
+                <h3>Galeria em Preparação</h3>
+                <p>Nenhuma foto foi encontrada na pasta <code>/media/fotos</code> na raiz do projeto. Adicione imagens (.jpg, .png, .webp) para que elas apareçam aqui automaticamente.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Final de Convite -->
+<section class="section cta-final">
+    <div class="container text-center narrow-container">
+        <h2 class="section-title">Venha Sentir o Clima da Montanha</h2>
+        <p class="lead-text">
+            O cheiro de lenha queimando, o pão fresco saindo do forno de pedra e o sabor inigualável de um queijo maturado nas alturas aguardam você.
+        </p>
+        <a href="{{ url_for('main.contato') }}" class="btn btn-primary btn-lg">Fale Conosco e Agende Sua Visita</a>
+    </div>
+</section>
+{% endblock %}
