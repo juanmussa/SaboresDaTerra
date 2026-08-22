@@ -37,6 +37,13 @@ def get_media_photos() -> list:
         return []
 
 
+@main_bp.route('/api')
+@main_bp.route('/api/index')
+def api_fallback():
+    """Redireciona rotas da API serverless para a página inicial."""
+    return redirect(url_for('main.home'))
+
+
 @main_bp.route('/')
 @main_bp.route('/home')
 def home():
