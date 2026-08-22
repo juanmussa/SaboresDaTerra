@@ -20,13 +20,19 @@ def create_app(config_class=Config) -> Flask:
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Garante que a pasta de mídia exista
-    os.makedirs(app.config['MEDIA_FOLDER'], exist_ok=True)
+    # Tenta criar a pasta de mídia caso o sistema permita (ignora em sistema read-only como Vercel)
+    try:
+        os.makedirs(app.config['MEDIA_FOLDER'], exist_ok=True)
+    except OSError:
+        pass
 
     # Rota dinâmica para servir fotos da pasta de mídia externa
     @app.route('/media/fotos/<path:filename>')
     def serve_media(filename):
         """Serve arquivos de imagem a partir do diretório de mídia externa."""
+        if not os.path.exists(app.config['MEDIA_FOLDER']):
+            from flask import abort
+            abort(404)
         return send_from_directory(app.config['MEDIA_FOLDER'], filename)
 
     # Registrar os Blueprints
