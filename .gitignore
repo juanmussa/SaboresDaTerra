@@ -24,7 +24,6 @@ env/
 .coverage
 htmlcov/
 pytest.ini
-tests/
 
 # ====================
 # Mídias locais

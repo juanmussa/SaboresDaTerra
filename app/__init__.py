@@ -17,7 +17,11 @@ def create_app(config_class=Config) -> Flask:
     Returns:
         A instância configurada do Flask.
     """
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        static_folder=config_class.STATIC_FOLDER,
+        static_url_path='/static'
+    )
     app.config.from_object(config_class)
 
     # Tenta criar a pasta de mídia caso o sistema permita (ignora em sistema read-only como Vercel)
