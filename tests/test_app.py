@@ -154,3 +154,24 @@ def test_static_assets(client):
 
     img_res = client.get("/static/img/placeholder.svg")
     assert img_res.status_code == 200
+
+
+def test_vercel_forwarded_uri(client):
+    """Testa se o middleware restaura rotas reescritas pela Vercel."""
+    # Simula rewrite da Vercel para /api/index com header X-Forwarded-Uri
+    res_producao = client.get('/api/index', headers={'X-Forwarded-Uri': '/producao'})
+    assert res_producao.status_code == 200
+    assert "Nossa Produção" in res_producao.get_data(as_text=True)
+
+    res_tabela = client.get('/api/index', headers={'X-Forwarded-Uri': '/tabela'})
+    assert res_tabela.status_code == 200
+    assert "Produtos e Sabores" in res_tabela.get_data(as_text=True)
+
+    # Simula chamada direta em /index.py ou /api/index sem header
+    res_fallback_index = client.get('/index.py')
+    assert res_fallback_index.status_code == 200
+    assert "Sabores da Serra" in res_fallback_index.get_data(as_text=True)
+
+    res_fallback_api = client.get('/api/index')
+    assert res_fallback_api.status_code == 200
+    assert "Sabores da Serra" in res_fallback_api.get_data(as_text=True)
